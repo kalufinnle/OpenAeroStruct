@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>collocation_points.py &#8212; OpenAeroStruct 2.2.1 documentation</title>
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/style.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="compressible_states.py" href="compressible_states.html" />
+    <link rel="prev" title="coeffs.py" href="coeffs.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="compressible_states.html" title="compressible_states.py"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="coeffs.html" title="coeffs.py"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">OpenAeroStruct 2.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Source Docs</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../openaerostruct.aerodynamics.html" accesskey="U">openaerostruct.aerodynamics</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick_example.html">Quick Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../aero_walkthrough.html">Aerodynamic Optimization Walkthrough</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../struct_example.html">Structural Optimization Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../aerostructural_walkthrough.html">Aerostructural Walkthrough</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../aerostructural_wingbox_walkthrough.html">Aerostructural with Wingbox Walkthrough</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../more_examples.html">More Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../specialty_topics.html">Specialty Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../v1_v2_conversion.html">OpenAeroStruct v1 to v2 Conversion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../how_to_contribute.html">How to Contribute to OpenAeroStruct</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Source Docs</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-openaerostruct.aerodynamics.collocation_points">
+<span id="collocation-points-py"></span><span id="openaerostruct-aerodynamics-collocation-points-py"></span><span id="index-0"></span><h1>collocation_points.py<a class="headerlink" href="#module-openaerostruct.aerodynamics.collocation_points" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="openaerostruct.aerodynamics.collocation_points.CollocationPoints">
+<em class="property">class </em><code class="sig-prename descclassname">openaerostruct.aerodynamics.collocation_points.</code><code class="sig-name descname">CollocationPoints</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/openaerostruct/aerodynamics/collocation_points.html#CollocationPoints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openaerostruct.aerodynamics.collocation_points.CollocationPoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">openmdao.core.explicitcomponent.ExplicitComponent</span></code></p>
+<p>Compute the Cartesian locations of the collocation points, the force
+analysis points, and the bound vortex vectors for the VLM analysis.
+These points are 3/4 back of the front of the panel in the
+chordwise direction, and halfway across the panel in the spanwise direction.</p>
+<p>We enforce the flow tangency condition at these collocation points when
+solving for the circulations of the lifting surfaces.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>def_mesh[nx, ny, 3]</strong><span class="classifier">numpy array</span></dt><dd><p>We have a mesh for each lifting surface in the problem.
+That is, if we have both a wing and a tail surface, we will have both
+<cite>wing_def_mesh</cite> and <cite>tail_def_mesh</cite> as inputs.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>coll_pts[num_eval_points, 3]</strong><span class="classifier">numpy array</span></dt><dd><p>The xyz coordinates of the collocation points used in the VLM analysis.
+This array contains points for all lifting surfaces in the problem.</p>
+</dd>
+<dt><strong>force_pts[num_eval_points, 3]</strong><span class="classifier">numpy array</span></dt><dd><p>The xyz coordinates of the force points used in the VLM analysis.
+We evaluate the velocity of the air at these points to get the sectional
+forces acting on the panel. This includes both the freestream and the
+induced velocity acting at these points.
+This array contains points for all lifting surfaces in the problem.</p>
+</dd>
+<dt><strong>bound_vecs[num_eval_points, 3]</strong><span class="classifier">numpy array</span></dt><dd><p>The vectors representing the bound vortices for each panel in the
+problem.
+This array contains points for all lifting surfaces in the problem.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="openaerostruct.aerodynamics.collocation_points.CollocationPoints.add_discrete_input">
+<code class="sig-name descname">add_discrete_input</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">val</span></em>, <em class="sig-param"><span class="n">desc</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">tags</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#openaerostruct.aerodynamics.collocation_points.CollocationPoints.add_discrete_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a discrete input variable to the component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>name</strong><span class="classifier">str</span></dt><dd><p>name of the variable in this component’s namespace.</p>
+</dd>
+<dt><strong>val</strong><span class="classifier">a picklable object</span></dt><dd><p>The initial value of the variable being added.</p>
+</dd>
+<dt><strong>desc</strong><span class="classifier">str</span></dt><dd><p>description of the variable</p>
+</dd>
+<dt><strong>tags</strong><span class="classifier">str or list of strs</span></dt><dd><p>User defined tags that can be used to filter what gets listed when calling
+list_inputs and list_outputs.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>dict</strong><span class="classifier"></span></dt><dd><p>metadata for added variable</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="openaerostruct.aerodynamics.collocation_points.CollocationPoints.add_discrete_output">
+<code class="sig-name descname">add_discrete_output</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">val</span></em>, <em class="sig-param"><span class="n">desc</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">tags</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#openaerostruct.aerodynamics.collocation_points.CollocationPoints.add_discrete_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an output variable to the component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>name</strong><span class="classifier">str</span></dt><dd><p>name of the variable in this component’s namespace.</p>
+</dd>
+<dt><strong>val</strong><span class="classifier">a picklable object</span></dt><dd><p>The initial value of the variable being added.</p>
+</dd>
+<dt><strong>desc</strong><span class="classifier">str</span></dt><dd><p>description of the variable.</p>
+</dd>
+<dt><strong>tags</strong><span class="classifier">str or list of strs or set of strs</span></dt><dd><p>User defined tags that can be used to filter what gets listed when calling
+list_inputs and list_outputs.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>dict</strong><span class="classifier"></span></dt><dd><p>metadata for added variable</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="openaerostruct.aerodynamics.collocation_points.CollocationPoints.convert2units">
+<code class="sig-name descname">convert2units</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">val</span></em>, <em class="sig-param"><span class="n">units</span></em><span class="sig-paren">)</span><a class="headerlink" href="#openaerostruct.aerodynamics.collocation_points.CollocationPoints.convert2units" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the given value to the specified units.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>name</strong><span class="classifier">str</span></dt><dd><p>Name of the variable.</p>
+</dd>
+<dt><strong>val</strong><span class="classifier">float or ndarray of float</span></dt><dd><p>The value of the variable.</p>
+</dd>
+<dt><strong>units</strong><span class="classifier">str</span></dt><dd><p>The units to convert to.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>float or ndarray of float</strong><span class="classifier"></span></dt><dd><p>The value converted to the specified units.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="openaerostruct.aerodynamics.collocation_points.CollocationPoints.declare_coloring">
+<code class="sig-name descname">declare_coloring</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">wrt</span><span class="o">=</span><span class="default_value">'\\*'</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'fd'</span></em>, <em class="sig-param"><span class="n">form</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">step</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">per_instance</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">num_full_jacs</span><span class="o">=</span><span class="default_value">3</span></em>, <em class="sig-param"><span class="n">tol</span><span class="o">=</span><span class="default_value">1e-25</span></em>, <em class="sig-param"><span class="n">orders</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">perturb_size</span><span class="o">=</span><span class="default_value">1e-09</span></em>, <em class="sig-param"><span class="n">min_improve_pct</span><span class="o">=</span><span class="default_value">5.0</span></em>, <em class="sig-param"><span class="n">show_summary</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">show_sparsity</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#openaerostruct.aerodynamics.collocation_points.CollocationPoints.declare_coloring" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set options for deriv coloring of a set of wrt vars matching the given pattern(s).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>wrt</strong><span class="classifier">str or list of str</span></dt><dd><p>The name or names of the variables that derivatives are taken with respect to.
+This can contain input names, output names, or glob patterns.</p>
+</dd>
+<dt><strong>method</strong><span class="classifier">str</span></dt><dd><p>Method used to compute derivative: “fd” for finite difference, “cs” for complex step.</p>
+</dd>
+<dt><strong>form</strong><span class="classifier">str</span></dt><dd><p>Finite difference form, can be “forward”, “central”, or “backward”. Leave
+undeclared to keep unchanged from previous or default value.</p>
+</dd>
+<dt><strong>step</strong><span class="classifier">float</span></dt><dd><p>Step size for finite difference. Leave undeclared to keep unchanged from previous
+or default value.</p>
+</dd>
+<dt><strong>per_instance</strong><span class="classifier">bool</span></dt><dd><p>If True, a separate coloring will be generated for each instance of a given class.
+Otherwise, only one coloring for a given class will be generated and all instances
+of that class will use it.</p>
+</dd>
+<dt><strong>num_full_jacs</strong><span class="classifier">int</span></dt><dd><p>Number of times to repeat partial jacobian computation when computing sparsity.</p>
+</dd>
+<dt><strong>tol</strong><span class="classifier">float</span></dt><dd><p>Tolerance used to determine if an array entry is nonzero during sparsity determination.</p>
+</dd>
+<dt><strong>orders</strong><span class="classifier">int</span></dt><dd><p>Number of orders above and below the tolerance to check during the tolerance sweep.</p>
+</dd>
+<dt><strong>perturb_size</strong><span class="classifier">float</span></dt><dd><p>Size of input/output perturbation during generation of sparsity.</p>
+</dd>
+<dt><strong>min_improve_pct</strong><span class="classifier">float</span></dt><dd><p>If coloring does not improve (decrease) the number of solves more than the given
+percentage, coloring will not be used.</p>
+</dd>
+<dt><strong>show_summary</strong><span class="classifier">bool</span></dt><dd><p>If True, display summary information after generating coloring.</p>
+</dd>
+<dt><strong>show_sparsity</strong><span class="classifier">bool</span></dt><dd><p>If True, display sparsity with coloring info after generating coloring.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="openaerostruct.aerodynamics.collocation_points.CollocationPoints.get_approx_coloring_fname">
+<code class="sig-name descname">get_approx_coloring_fname</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#openaerostruct.aerodynamics.collocation_points.CollocationPoints.get_approx_coloring_fname" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the full pathname to a coloring file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>system</strong><span class="classifier">System</span></dt><dd><p>The System having its coloring saved or loaded.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>str</strong><span class="classifier"></span></dt><dd><p>Full pathname of the coloring file.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="openaerostruct.aerodynamics.collocation_points.CollocationPoints.msginfo">
+<em class="property">property </em><code class="sig-name descname">msginfo</code><a class="headerlink" href="#openaerostruct.aerodynamics.collocation_points.CollocationPoints.msginfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Our instance pathname, if available, or our class name.  For use in error messages.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>str</strong><span class="classifier"></span></dt><dd><p>Either our instance pathname or class name.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="openaerostruct.aerodynamics.collocation_points.CollocationPoints.set_solver_print">
+<code class="sig-name descname">set_solver_print</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">level</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">depth</span><span class="o">=</span><span class="default_value">1e+99</span></em>, <em class="sig-param"><span class="n">type_</span><span class="o">=</span><span class="default_value">'all'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#openaerostruct.aerodynamics.collocation_points.CollocationPoints.set_solver_print" title="Permalink to this definition">¶</a></dt>
+<dd><p>Control printing for solvers and subsolvers in the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>level</strong><span class="classifier">int</span></dt><dd><p>iprint level. Set to 2 to print residuals each iteration; set to 1
+to print just the iteration totals; set to 0 to disable all printing
+except for failures, and set to -1 to disable all printing including failures.</p>
+</dd>
+<dt><strong>depth</strong><span class="classifier">int</span></dt><dd><p>How deep to recurse. For example, you can set this to 0 if you only want
+to print the top level linear and nonlinear solver messages. Default
+prints everything.</p>
+</dd>
+<dt><strong>type_</strong><span class="classifier">str</span></dt><dd><p>Type of solver to set: ‘LN’ for linear, ‘NL’ for nonlinear, or ‘all’ for all.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="openaerostruct.aerodynamics.collocation_points.CollocationPoints.use_fixed_coloring">
+<code class="sig-name descname">use_fixed_coloring</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">coloring=&lt;object object at 0x7f87dcb1cbf0&gt;</em>, <em class="sig-param">recurse=True</em><span class="sig-paren">)</span><a class="headerlink" href="#openaerostruct.aerodynamics.collocation_points.CollocationPoints.use_fixed_coloring" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use a precomputed coloring for this System.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>coloring</strong><span class="classifier">str</span></dt><dd><p>A coloring filename.  If no arg is passed, filename will be determined
+automatically.</p>
+</dd>
+<dt><strong>recurse</strong><span class="classifier">bool</span></dt><dd><p>If True, set fixed coloring in all subsystems that declare a coloring. Ignored
+if a specific coloring is passed in.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="compressible_states.html" title="compressible_states.py"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="coeffs.html" title="coeffs.py"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">OpenAeroStruct 2.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Source Docs</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../openaerostruct.aerodynamics.html" >openaerostruct.aerodynamics</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, John Jasa, Dr. John Hwang, Justin S. Gray.
+      Last updated on Jun 16, 2020.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.4.
+    </div>
+  </body>
+</html>

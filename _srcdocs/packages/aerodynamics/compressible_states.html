@@ -1,0 +1,315 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>compressible_states.py &#8212; OpenAeroStruct 2.2.1 documentation</title>
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/style.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="convert_velocity.py" href="convert_velocity.html" />
+    <link rel="prev" title="collocation_points.py" href="collocation_points.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="convert_velocity.html" title="convert_velocity.py"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="collocation_points.html" title="collocation_points.py"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">OpenAeroStruct 2.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Source Docs</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../openaerostruct.aerodynamics.html" accesskey="U">openaerostruct.aerodynamics</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick_example.html">Quick Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../aero_walkthrough.html">Aerodynamic Optimization Walkthrough</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../struct_example.html">Structural Optimization Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../aerostructural_walkthrough.html">Aerostructural Walkthrough</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../aerostructural_wingbox_walkthrough.html">Aerostructural with Wingbox Walkthrough</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../more_examples.html">More Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../specialty_topics.html">Specialty Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../v1_v2_conversion.html">OpenAeroStruct v1 to v2 Conversion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../how_to_contribute.html">How to Contribute to OpenAeroStruct</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Source Docs</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-openaerostruct.aerodynamics.compressible_states">
+<span id="compressible-states-py"></span><span id="openaerostruct-aerodynamics-compressible-states-py"></span><span id="index-0"></span><h1>compressible_states.py<a class="headerlink" href="#module-openaerostruct.aerodynamics.compressible_states" title="Permalink to this headline">¶</a></h1>
+<p>Class definition for CompressibleVLMStates.</p>
+<dl class="py class">
+<dt id="openaerostruct.aerodynamics.compressible_states.CompressibleVLMStates">
+<em class="property">class </em><code class="sig-prename descclassname">openaerostruct.aerodynamics.compressible_states.</code><code class="sig-name descname">CompressibleVLMStates</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/openaerostruct/aerodynamics/compressible_states.html#CompressibleVLMStates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openaerostruct.aerodynamics.compressible_states.CompressibleVLMStates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">openmdao.core.group.Group</span></code></p>
+<p>Group that contains the states for a compressible aerodynamic analysis.</p>
+<p>This is done in three steps:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Convert all VLM geometries to Prandtl-Glaert domain.</p></li>
+</ol>
+<p>2. Solve the VLM problem in the Prandtl-Glaert domain using
+VLMStates group.</p>
+<p>3. Convert the resulting forces back to the physical domain through
+the inverse Prandtl-Glauert transform to recover the compressible
+forces.</p>
+</div></blockquote>
+<dl class="py method">
+<dt id="openaerostruct.aerodynamics.compressible_states.CompressibleVLMStates.convert2units">
+<code class="sig-name descname">convert2units</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">val</span></em>, <em class="sig-param"><span class="n">units</span></em><span class="sig-paren">)</span><a class="headerlink" href="#openaerostruct.aerodynamics.compressible_states.CompressibleVLMStates.convert2units" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the given value to the specified units.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>name</strong><span class="classifier">str</span></dt><dd><p>Name of the variable.</p>
+</dd>
+<dt><strong>val</strong><span class="classifier">float or ndarray of float</span></dt><dd><p>The value of the variable.</p>
+</dd>
+<dt><strong>units</strong><span class="classifier">str</span></dt><dd><p>The units to convert to.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>float or ndarray of float</strong><span class="classifier"></span></dt><dd><p>The value converted to the specified units.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="openaerostruct.aerodynamics.compressible_states.CompressibleVLMStates.declare_coloring">
+<code class="sig-name descname">declare_coloring</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">wrt</span><span class="o">=</span><span class="default_value">'\\*'</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'fd'</span></em>, <em class="sig-param"><span class="n">form</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">step</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">per_instance</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">num_full_jacs</span><span class="o">=</span><span class="default_value">3</span></em>, <em class="sig-param"><span class="n">tol</span><span class="o">=</span><span class="default_value">1e-25</span></em>, <em class="sig-param"><span class="n">orders</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">perturb_size</span><span class="o">=</span><span class="default_value">1e-09</span></em>, <em class="sig-param"><span class="n">min_improve_pct</span><span class="o">=</span><span class="default_value">5.0</span></em>, <em class="sig-param"><span class="n">show_summary</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">show_sparsity</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#openaerostruct.aerodynamics.compressible_states.CompressibleVLMStates.declare_coloring" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set options for deriv coloring of a set of wrt vars matching the given pattern(s).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>wrt</strong><span class="classifier">str or list of str</span></dt><dd><p>The name or names of the variables that derivatives are taken with respect to.
+This can contain input names, output names, or glob patterns.</p>
+</dd>
+<dt><strong>method</strong><span class="classifier">str</span></dt><dd><p>Method used to compute derivative: “fd” for finite difference, “cs” for complex step.</p>
+</dd>
+<dt><strong>form</strong><span class="classifier">str</span></dt><dd><p>Finite difference form, can be “forward”, “central”, or “backward”. Leave
+undeclared to keep unchanged from previous or default value.</p>
+</dd>
+<dt><strong>step</strong><span class="classifier">float</span></dt><dd><p>Step size for finite difference. Leave undeclared to keep unchanged from previous
+or default value.</p>
+</dd>
+<dt><strong>per_instance</strong><span class="classifier">bool</span></dt><dd><p>If True, a separate coloring will be generated for each instance of a given class.
+Otherwise, only one coloring for a given class will be generated and all instances
+of that class will use it.</p>
+</dd>
+<dt><strong>num_full_jacs</strong><span class="classifier">int</span></dt><dd><p>Number of times to repeat partial jacobian computation when computing sparsity.</p>
+</dd>
+<dt><strong>tol</strong><span class="classifier">float</span></dt><dd><p>Tolerance used to determine if an array entry is nonzero during sparsity determination.</p>
+</dd>
+<dt><strong>orders</strong><span class="classifier">int</span></dt><dd><p>Number of orders above and below the tolerance to check during the tolerance sweep.</p>
+</dd>
+<dt><strong>perturb_size</strong><span class="classifier">float</span></dt><dd><p>Size of input/output perturbation during generation of sparsity.</p>
+</dd>
+<dt><strong>min_improve_pct</strong><span class="classifier">float</span></dt><dd><p>If coloring does not improve (decrease) the number of solves more than the given
+percentage, coloring will not be used.</p>
+</dd>
+<dt><strong>show_summary</strong><span class="classifier">bool</span></dt><dd><p>If True, display summary information after generating coloring.</p>
+</dd>
+<dt><strong>show_sparsity</strong><span class="classifier">bool</span></dt><dd><p>If True, display sparsity with coloring info after generating coloring.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="openaerostruct.aerodynamics.compressible_states.CompressibleVLMStates.get_approx_coloring_fname">
+<code class="sig-name descname">get_approx_coloring_fname</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#openaerostruct.aerodynamics.compressible_states.CompressibleVLMStates.get_approx_coloring_fname" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the full pathname to a coloring file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>system</strong><span class="classifier">System</span></dt><dd><p>The System having its coloring saved or loaded.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>str</strong><span class="classifier"></span></dt><dd><p>Full pathname of the coloring file.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="openaerostruct.aerodynamics.compressible_states.CompressibleVLMStates.msginfo">
+<em class="property">property </em><code class="sig-name descname">msginfo</code><a class="headerlink" href="#openaerostruct.aerodynamics.compressible_states.CompressibleVLMStates.msginfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Our instance pathname, if available, or our class name.  For use in error messages.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>str</strong><span class="classifier"></span></dt><dd><p>Either our instance pathname or class name.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="openaerostruct.aerodynamics.compressible_states.CompressibleVLMStates.promotes">
+<code class="sig-name descname">promotes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">subsys_name</span></em>, <em class="sig-param"><span class="n">any</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">inputs</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">outputs</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">src_indices</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">flat_src_indices</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#openaerostruct.aerodynamics.compressible_states.CompressibleVLMStates.promotes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Promote a variable in the model tree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>subsys_name</strong><span class="classifier">str</span></dt><dd><p>The name of the child subsystem whose inputs/outputs are being promoted.</p>
+</dd>
+<dt><strong>any</strong><span class="classifier">Sequence of str or tuple</span></dt><dd><p>A Sequence of variable names (or tuples) to be promoted, regardless
+of if they are inputs or outputs. This is equivalent to the items
+passed via the <cite>promotes=</cite> argument to add_subsystem.  If given as a
+tuple, we use the “promote as” standard of (‘real name’, ‘promoted name’)*[]:</p>
+</dd>
+<dt><strong>inputs</strong><span class="classifier">Sequence of str or tuple</span></dt><dd><p>A Sequence of input names (or tuples) to be promoted. Tuples are
+used for the “promote as” capability.</p>
+</dd>
+<dt><strong>outputs</strong><span class="classifier">Sequence of str or tuple</span></dt><dd><p>A Sequence of output names (or tuples) to be promoted. Tuples are
+used for the “promote as” capability.</p>
+</dd>
+<dt><strong>src_indices</strong><span class="classifier">int or list of ints or tuple of ints or int ndarray or Iterable or None</span></dt><dd><p>This argument applies only to promoted inputs.
+The global indices of the source variable to transfer data from.
+A value of None implies this input depends on all entries of source.
+Default is None. The shapes of the target and src_indices must match,
+and form of the entries within is determined by the value of ‘flat_src_indices’.</p>
+</dd>
+<dt><strong>flat_src_indices</strong><span class="classifier">bool</span></dt><dd><p>This argument applies only to promoted inputs.
+If True, each entry of src_indices is assumed to be an index into the
+flattened source.  Otherwise each entry must be a tuple or list of size equal
+to the number of dimensions of the source.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="openaerostruct.aerodynamics.compressible_states.CompressibleVLMStates.set_solver_print">
+<code class="sig-name descname">set_solver_print</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">level</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">depth</span><span class="o">=</span><span class="default_value">1e+99</span></em>, <em class="sig-param"><span class="n">type_</span><span class="o">=</span><span class="default_value">'all'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#openaerostruct.aerodynamics.compressible_states.CompressibleVLMStates.set_solver_print" title="Permalink to this definition">¶</a></dt>
+<dd><p>Control printing for solvers and subsolvers in the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>level</strong><span class="classifier">int</span></dt><dd><p>iprint level. Set to 2 to print residuals each iteration; set to 1
+to print just the iteration totals; set to 0 to disable all printing
+except for failures, and set to -1 to disable all printing including failures.</p>
+</dd>
+<dt><strong>depth</strong><span class="classifier">int</span></dt><dd><p>How deep to recurse. For example, you can set this to 0 if you only want
+to print the top level linear and nonlinear solver messages. Default
+prints everything.</p>
+</dd>
+<dt><strong>type_</strong><span class="classifier">str</span></dt><dd><p>Type of solver to set: ‘LN’ for linear, ‘NL’ for nonlinear, or ‘all’ for all.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="openaerostruct.aerodynamics.compressible_states.CompressibleVLMStates.use_fixed_coloring">
+<code class="sig-name descname">use_fixed_coloring</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">coloring=&lt;object object at 0x7f87dcb1cbf0&gt;</em>, <em class="sig-param">recurse=True</em><span class="sig-paren">)</span><a class="headerlink" href="#openaerostruct.aerodynamics.compressible_states.CompressibleVLMStates.use_fixed_coloring" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use a precomputed coloring for this System.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>coloring</strong><span class="classifier">str</span></dt><dd><p>A coloring filename.  If no arg is passed, filename will be determined
+automatically.</p>
+</dd>
+<dt><strong>recurse</strong><span class="classifier">bool</span></dt><dd><p>If True, set fixed coloring in all subsystems that declare a coloring. Ignored
+if a specific coloring is passed in.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="convert_velocity.html" title="convert_velocity.py"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="collocation_points.html" title="collocation_points.py"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">OpenAeroStruct 2.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Source Docs</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../openaerostruct.aerodynamics.html" >openaerostruct.aerodynamics</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, John Jasa, Dr. John Hwang, Justin S. Gray.
+      Last updated on Jun 16, 2020.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.4.
+    </div>
+  </body>
+</html>
